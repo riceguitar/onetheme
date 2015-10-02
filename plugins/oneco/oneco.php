@@ -63,14 +63,14 @@ class OneImageShare extends WP_Widget {
 					echo '
 					<div class="one-recent-image-wrap">
 						<a href="#one-share-popup" class="one-share-image">';
-							the_post_thumbnail('quote-widget');
+							the_post_thumbnail('quote-widget-square');
 					echo '<span class="one-share-trigger">Share This</span></a>
 					</div>
 					';
 
 					echo '
 					<div id="one-share-popup" style="display: none;">';
-						the_post_thumbnail('large');
+						the_post_thumbnail('quote-widget-square');
 						one_sharing_all();
 					'</div>';
 				}

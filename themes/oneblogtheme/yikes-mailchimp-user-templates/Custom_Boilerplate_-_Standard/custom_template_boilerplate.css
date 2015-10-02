@@ -1,0 +1,148 @@
+/*
+	Template: Custom Template Boilerplate
+	Description : This is the .css file associated with the above template. This file gets loaded when using the above 
+						template to display a custom opt-in form for YIKES Inc. Easy MailChimp Extender.
+	Author : YIKES Inc.
+	Author Contact : http://www.yikesinc.com
+*/
+
+/*************************************************************************************************************************/
+
+
+/** All Form Inputs (including the submit button) **/
+.custom_template_boilerplate input {
+    outline: none;
+    width: 100%;
+    font-size: 15px;
+    line-height: 33px;
+    height: 33px;
+    border: none;
+    color: #495155;
+    font-family: "montserratregular";
+}
+
+.custom_template_boilerplate input::placeholder {
+  color: #6bb2c9;
+}
+.custom_template_boilerplate ::-webkit-input-placeholder {
+    color:    #6bb2c9;
+}
+.custom_template_boilerplate :-moz-placeholder {
+    color:    #6bb2c9;
+}
+.custom_template_boilerplate ::-moz-placeholder {
+    color:    #6bb2c9;
+}
+.custom_template_boilerplate :-ms-input-placeholder {
+    color:    #6bb2c9;
+}
+
+/** Form Wrapper **/
+.custom_template_boilerplate #wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background: url('rob-newsletter-bg.png') no-repeat #6bb2c9;
+  background-size: contain;
+  background-position: right;
+}
+
+/** Setting the field rows to padding 0 **/
+.custom_template_boilerplate .widget_yikes_mc_widget input, 
+.custom_template_boilerplate .widget_yikes_mc_widget .yks-mailchimpFormDivRowField {
+	padding: 0;
+}
+
+/** Box element within the #wrapper **/
+.yikes-mailchimp-form-description {
+  display: none;
+}
+
+.custom_template_boilerplate #box {
+  margin: 0 0 0 32px;
+  border-radius: 0;
+  width: 330px;
+  min-height: 284px;
+  padding-bottom: 33px;
+}
+
+.custom_template_boilerplate #top_header {
+  padding-top: 43px;
+  padding-bottom: 22px;
+}
+
+.yks-mailchimpFormDivSubmit p {
+  margin: 0;
+}
+
+.custom_template_boilerplate .ykfmc-submit {
+  background: #ef4d38;
+  border-radius: 6px;
+  color: #fff !important;
+  display: block;
+  height: 33px;
+  line-height: 33px;
+  text-transform: uppercase;
+  padding: 0;
+}
+
+/** Form Header - Sign Up Now! **/
+.custom_template_boilerplate #top_header > h3 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #495155;
+  margin: 0;
+}
+
+.custom_template_boilerplate .yks-mailchimpFormDivRowLabel {
+  display: none;
+}
+
+/** Form Sub Header - Sign up for our mailing list.... **/
+.custom_template_boilerplate #top_header > h5 {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 300;
+  color: #e50000;
+  line-height: 1.6;
+  margin: 0;
+  padding: 15px 0;
+  color: #555;
+}
+
+.yks-mc-form-row-first-name {
+  display: inline-block;
+  width: 30%;
+  margin-bottom: 0;
+}
+.yks-mc-form-row-email-address {
+  display: inline-block;
+  width: 68%;
+  margin-bottom: 0;
+}
+/** Disclaimer Notice **/
+.custom_template_boilerplate .disclaimer {
+	text-align: center;
+	font-style: italic;
+	color: rgba(51, 51, 51, 0.56);
+}
+
+.preloader-confirmation-box>.success {
+      color: #fff;
+    font-size: 12px;
+    /* line-height: 1.0em; */
+    display: block;
+    line-height: 1.1em;
+}
+.preloader-confirmation-box {
+  line-height: 1.25em;
+    display: block;
+}
+#yks_form_error_message {
+  display: block;
+  color: #fff;
+  line-height: 1.25em;
+}
+.update-email-profile-link {
+  color: #fff;
+}

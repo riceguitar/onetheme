@@ -45,6 +45,8 @@ add_theme_support( 'html5', array(
 ) );
 
 add_image_size( 'quote-widget', 350, 670, array( 'center', 'center' ) );
+add_image_size( 'quote-widget-square', 670, 670, array( 'center', 'center' ) );
+add_image_size( 'search-thumb', 500, 500, array( 'center', 'center' ) );
 
 // ************* Customizer
 function one_theme_customizer( $wp_customize ) {
@@ -64,12 +66,22 @@ function one_theme_customizer( $wp_customize ) {
 			'priority' => 40,
     	)
 	);
+	$wp_customize->add_section(
+		'one_design_options', 
+		array(
+			'title'    => __('Design Options', 'one_theme'),
+			'description' => 'You can control several design options here.',
+			'priority' => 40,
+    	)
+	);
 
 	$wp_customize->add_setting('one_site_logo', array('capability' => 'edit_theme_options'));
+	$wp_customize->add_setting('one_site_logo_mobile', array('capability' => 'edit_theme_options'));
 	$wp_customize->add_setting('one_site_social_fb', array('capability'  => 'edit_theme_options'));
 	$wp_customize->add_setting('one_site_social_twitter', array('capability'  => 'edit_theme_options'));
 	$wp_customize->add_setting('one_site_social_gplus', array('capability'  => 'edit_theme_options'));
 	$wp_customize->add_setting('one_site_social_linkedin', array('capability'  => 'edit_theme_options'));
+	$wp_customize->add_setting('one_site_design_sticky_widget', array('capability' => 'edit_theme_options'));
  
     $wp_customize->add_control(
     	'one_theme_social_fb', 
@@ -110,6 +122,28 @@ function one_theme_customizer( $wp_customize ) {
 				'label'    => __( 'Logo', 'one_theme' ),
 				'section'  => 'one_logo_section',
 				'settings' => 'one_site_logo',
+			)
+		)
+	);
+	$wp_customize->add_control(
+		new WP_Customize_Image_Control( 
+			$wp_customize, 'one_site_logo_mobile', array(
+				'label'    => __( 'Logo', 'one_theme' ),
+				'section'  => 'one_logo_section',
+				'settings' => 'one_site_logo_mobile',
+			)
+		)
+	);
+
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+	    	'one_theme_design_sticky_widget', 
+			array(
+				'label'      => __('Enable Sticky Widgets', 'one_theme'),
+				'section'    => 'one_design_options',
+				'settings'   => 'one_site_design_sticky_widget',
+				'type'		 => 'checkbox',
 			)
 		)
 	);
@@ -173,7 +207,25 @@ function one_widgets() {
 		'description'   => 'This is an optional widget area, on the bottom of each post content.',
 		'before_widget' => '<div>',
 		'after_widget'  => '</div>',
-		'before_title'  => '<h2 class="one-widget-title">',
+		'before_title'  => '<h2 class="one-widget-title" style="display: none;">',
+		'after_title'   => '</h2>',
+	));
+	register_sidebar(array(
+		'name'          => 'Search Results Widgets',
+		'id'            => 'one-search-results',
+		'description'   => 'This is an optional widget area, on the sidebar of search results.',
+		'before_widget' => '<div>',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h2 class="one-widget-title" style="display: none;">',
+		'after_title'   => '</h2>',
+	));
+	register_sidebar(array(
+		'name'          => 'Mobile Podcast Widgets',
+		'id'            => 'one-mobile-player',
+		'description'   => 'This is an optional widget area, that enables you to put a podcast player for mobile.',
+		'before_widget' => '<div class="widget mobile-widgets %2$s">',
+		'after_widget'  => '</div>',
+		'before_title'  => '<h2 class="one-widget-title" style="display: none;">',
 		'after_title'   => '</h2>',
 	));
 }
@@ -181,14 +233,14 @@ add_action( 'widgets_init', 'one_widgets' );
 
 // ************* Homepage Slider
 function one_blog_slider() {
-	if  (is_front_page()) {
+	if  (is_front_page() && function_exists('soliloquy')) {
 		echo '
-		<div class="home-slider-container">
-			<div class="container">
+		<div class="home-slider-container hidden-xs">
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="home-slider">';
-							if ( function_exists( 'soliloquy' ) ) { soliloquy( 'home-page-slider', 'slug' ); }
+							soliloquy('home-page-slider', 'slug');
 						echo '</div>
 					</div>
 				</div>
@@ -201,8 +253,8 @@ add_action( 'one_above_content', 'one_blog_slider');
 
 // ************* Cateogry List
 function one_category_list() {
-	echo '<section class="category-list">
-			<div class="container">
+	echo '<section class="category-list hidden-xs">
+			<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-12">
 								<ul class="category-list-top">';
@@ -308,14 +360,58 @@ if (is_search()) {
 
 // Mailchimp Subscriber Count
 function display_mc_subscriber_count() {
-	$mailChimp = new yksemeBase();
-	$list = $mailChimp->getListsData();
-	$list_id = key($list);
-	echo '<script>
-		jQuery(function() {
-		jQuery(".mailchimpCountTarget").text("'.$list['subscriber-count']['subscriber-count-'.$list_id].'");
-	});
-	</script>';
+	if(class_exists("yksemeBase")) {
+		$mailChimp = new yksemeBase();
+		$list = $mailChimp->getListsData();
+		$list_id = key($list);
+		echo '<script>
+			jQuery(function() {
+			jQuery(".mailchimpCountTarget").text("'.$list['subscriber-count']['subscriber-count-'.$list_id].'");
+		});
+		</script>';
+	}
 }
-//add_action( 'one_above_content' , 'display_mc_subscriber_count' );
+add_action( 'one_above_content' , 'display_mc_subscriber_count' );
+
+// Build Category Colors
+function show_categories($excl=''){
+   $categories = get_categories(array(
+   		'hide_empty' => false
+   	));
+	echo '<style>';
+	foreach ($categories as $cat) {
+		echo '.category-list .category-list-top .cat-item-'.$cat->cat_ID.' a:hover {box-shadow: 0 -3px 0px '. get_field('one_category_color', $cat) . ' inset;}';
+	}
+	echo '</style>';
+}
+add_action('wp_head', 'show_categories');
+
+// Fixed Widgets Option
+add_filter( 'body_class', 'one_fixed_class' );
+function one_fixed_class( $classes ) {
+	if (get_theme_mod('one_site_design_sticky_widget') && is_home()) {
+		$classes[] = 'fixed-widget';
+	}
+	return $classes;
+}
+
+// Change Search Results Count
+function change_wp_search_size($query) {
+	if ( $query->is_search ) // Make sure it is a search page
+		$query->query_vars['posts_per_page'] = 100; // Change 10 to the number of posts you would like to show
+
+	return $query; // Return our modified query variables
+}
+add_filter('pre_get_posts', 'change_wp_search_size'); // Hook our custom function onto the request filter
+
+// Change Default Page Template Name
+function yourprefix_filter_gettext( $translation, $text, $domain ) {
+    if ( $text == 'Default Template' ) {
+        return __( 'Page with Right Sidebar', 'one_theme' );
+    }
+    return $translation;
+}
+add_filter( 'gettext', 'yourprefix_filter_gettext', 10, 3 );  
+
+
 

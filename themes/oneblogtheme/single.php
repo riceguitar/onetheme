@@ -2,10 +2,7 @@
 
 <?php do_action( 'one_above_content'); ?>
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-12"><hr class="single-border" /></div>
-	</div>
+<div class="container-fluid">
 	<div class="row">
 		<div class="<?php one_col_width('content'); ?>">
 			<?php 
@@ -33,9 +30,8 @@
 			</nav>
 			
 		</div>
-		<div class="<?php one_col_width('side_bar'); ?>">
-			<?php dynamic_sidebar( 'one-sidebar' ); ?>
-		</div>
+		<?php get_sidebar(); ?>
+
 	</div>
 </div>
 

@@ -4,6 +4,8 @@
  */
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+	<?php get_template_part( 'partials/post', 'meta-head' ); ?>
+	<div class="article-bottom"></div>
 	<?php if (has_post_thumbnail()) { ?>
 	<div class="post-image">
 		<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail('large'); ?></a>

@@ -9,10 +9,10 @@
 	<div class="row">
 		<div class="col-md-11 col-md-offset-1">
 			<div class="post-meta">
-				<div class="post-meta-item"><?php one_category_colors(); //echo get_the_category_list( __( ', ', 'one_theme' ) ); ?></div>
-				<div class="post-meta-item"><?php the_date('l, F j, Y', '<time>', '</time>'); ?></div>
+				<div class="post-meta-item post-meta-cats"><?php one_category_colors(); //echo get_the_category_list( __( ', ', 'one_theme' ) ); ?></div>
+				<div class="post-meta-item post-meta-time"><?php the_date('l, F j, Y', '<time>', '</time>'); ?></div>
 				<?php if (function_exists('wpp_get_views')) { ?>
-					<div class="post-meta-item"><i class="fa fa-eye"></i> <?php echo wpp_get_views(get_the_ID()); ?></div>
+					<div class="post-meta-item post-meta-view-count"><i class="fa fa-eye"></i> <?php echo wpp_get_views(get_the_ID()); ?></div>
 				<?php } ?>
 			</div>
 			<?php if (is_single()) : ?>

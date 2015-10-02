@@ -1,6 +1,6 @@
 <?php if (!is_search()) : ?>
 <div class="footer-widgets">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
 			<?php if (is_active_sidebar('one-footer')) { ?>
@@ -12,7 +12,7 @@
 </div>
 
 <footer class="global-footer">
-	<div class="container">
+	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
 				<?php $one_blog_theme = wp_get_theme(); ?>
