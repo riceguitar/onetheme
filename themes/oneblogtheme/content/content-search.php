@@ -16,7 +16,9 @@
 			if ($the_post_format == 'quote') {
 				
 			} else {
-				the_post_thumbnail('thumbnail');
+				echo '<a href="'.get_permalink().'" target="_parent">';
+				the_post_thumbnail('search-thumb');
+				echo '</a>';
 			}
 		}
 	?>
@@ -25,7 +27,7 @@
 	<?php } ?>
 
 		<?php get_template_part( 'partials/search', 'meta' ); ?>
-		<h4><a href="<?php the_permalink(); ?>" target="_top"><?php the_title(); ?></a></h4>
+		<h4><a href="<?php the_permalink(); ?>" target="_parent"><?php the_title(); ?></a></h4>
 		
 		<?php if (($the_post_format == 'quote') || ($the_post_format == 'image')) { ?>
 		<?php } else { ?>

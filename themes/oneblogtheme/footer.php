@@ -1,3 +1,6 @@
+</div><!-- primary -->
+
+
 <?php if (!is_search()) : ?>
 <div class="footer-widgets">
 	<div class="container-fluid">
@@ -11,7 +14,7 @@
 	</div>
 </div>
 
-<footer class="global-footer">
+<footer class="global-footer" id="globalFooter">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
@@ -31,5 +34,6 @@
 
 <?php wp_footer(); ?>
 
+</div>
 </body>
 </html>

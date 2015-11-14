@@ -3,7 +3,8 @@
 function one_theme_js() {
 	wp_enqueue_script( 'one_theme_js', get_template_directory_uri() . '/js/theme.js', array('jquery'), '1.0.0', true );
 	wp_enqueue_script( 'one_theme_bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js' );
-	wp_enqueue_script( 'one_theme_waypoints', get_template_directory_uri() . '/js/waypoints.js' );
+	//wp_enqueue_script( 'one_theme_waypoints', get_template_directory_uri() . '/js/waypoints.js' );
+	wp_enqueue_script( 'one_theme_stickykit', get_template_directory_uri() . '/js/sticky-kit.js' );
 	wp_enqueue_script( 'one_theme_fancyjs', get_template_directory_uri() . '/js/fancy/jquery.fancybox.pack.js' );
 }
 add_action( 'wp_enqueue_scripts', 'one_theme_js' );
@@ -12,9 +13,13 @@ add_action( 'wp_enqueue_scripts', 'one_theme_js' );
 function one_theme_css() {
 	wp_enqueue_style( 'one-theme-info', get_stylesheet_uri(), 1);
 	wp_enqueue_style( 'one-bootstrap', get_template_directory_uri() . '/css/bootstrap/bootstrap.css', 5);
-	wp_enqueue_style( 'one-brand-font', get_template_directory_uri() . '/css/fonts.css', 6);
+	//wp_enqueue_style( 'one-brand-font', get_template_directory_uri() . '/css/fonts.css', 6);
+	wp_enqueue_style( 'one-brand-font', 'https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic', 6);
+	wp_enqueue_style( 'one-heading-font', 'https://fonts.googleapis.com/css?family=Playfair+Display:400,700');
+	wp_enqueue_style( 'one-heading-font-two', 'https://fonts.googleapis.com/css?family=Oswald:400,700');
 	wp_enqueue_style( 'one-fa', '//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', 7);
 	wp_enqueue_style( 'one-fancy-css', get_template_directory_uri() . '/js/fancy/jquery.fancybox.css', 8);
+	wp_enqueue_style( 'one-bars', get_template_directory_uri() . '/css/bars.css', 12);
 	wp_enqueue_style( 'one-style', get_template_directory_uri() . '/css/style.css', 10);
 	wp_enqueue_style( 'one-print', get_template_directory_uri() . '/css/print.css', '10', '','print');
 }
@@ -74,6 +79,14 @@ function one_theme_customizer( $wp_customize ) {
 			'priority' => 40,
     	)
 	);
+	$wp_customize->add_section(
+		'one_mobile_options', 
+		array(
+			'title'    => __('Mobile Options', 'one_theme'),
+			'description' => 'You can control options that effect moble only.',
+			'priority' => 50,
+    	)
+	);
 
 	$wp_customize->add_setting('one_site_logo', array('capability' => 'edit_theme_options'));
 	$wp_customize->add_setting('one_site_logo_mobile', array('capability' => 'edit_theme_options'));
@@ -81,7 +94,9 @@ function one_theme_customizer( $wp_customize ) {
 	$wp_customize->add_setting('one_site_social_twitter', array('capability'  => 'edit_theme_options'));
 	$wp_customize->add_setting('one_site_social_gplus', array('capability'  => 'edit_theme_options'));
 	$wp_customize->add_setting('one_site_social_linkedin', array('capability'  => 'edit_theme_options'));
-	$wp_customize->add_setting('one_site_design_sticky_widget', array('capability' => 'edit_theme_options'));
+	$wp_customize->add_setting('one_site_design_sticky_widget_mid', array('capability' => 'edit_theme_options'));
+	$wp_customize->add_setting('one_site_design_sticky_widget_right', array('capability' => 'edit_theme_options'));
+	$wp_customize->add_setting('one_site_mobile_message', array('capability' => 'edit_theme_options'));
  
     $wp_customize->add_control(
     	'one_theme_social_fb', 
@@ -138,12 +153,38 @@ function one_theme_customizer( $wp_customize ) {
 	$wp_customize->add_control(
 		new WP_Customize_Control(
 			$wp_customize,
-	    	'one_theme_design_sticky_widget', 
+	    	'one_theme_design_sticky_widget_right', 
 			array(
-				'label'      => __('Enable Sticky Widgets', 'one_theme'),
+				'label'      => __('Enable Sticky Widgets (Right)', 'one_theme'),
 				'section'    => 'one_design_options',
-				'settings'   => 'one_site_design_sticky_widget',
+				'settings'   => 'one_site_design_sticky_widget_right',
 				'type'		 => 'checkbox',
+			)
+		)
+	);
+
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+	    	'one_theme_design_sticky_widget_mid', 
+			array(
+				'label'      => __('Enable Sticky Widgets (Mid)', 'one_theme'),
+				'section'    => 'one_design_options',
+				'settings'   => 'one_site_design_sticky_widget_mid',
+				'type'		 => 'checkbox',
+			)
+		)
+	);
+
+	$wp_customize->add_control(
+		new WP_Customize_Control(
+			$wp_customize,
+	    	'one_theme_mobile_message', 
+			array(
+				'label'      => __('Mobile Message', 'one_theme'),
+				'section'    => 'one_mobile_options',
+				'settings'   => 'one_site_mobile_message',
+				'type'		 => 'textarea',
 			)
 		)
 	);
@@ -225,7 +266,7 @@ function one_widgets() {
 		'description'   => 'This is an optional widget area, that enables you to put a podcast player for mobile.',
 		'before_widget' => '<div class="widget mobile-widgets %2$s">',
 		'after_widget'  => '</div>',
-		'before_title'  => '<h2 class="one-widget-title" style="display: none;">',
+		'before_title'  => '<h2 class="one-widget-title">',
 		'after_title'   => '</h2>',
 	));
 }
@@ -323,13 +364,20 @@ Thanks!');
 }
 
 function one_sharing_all () {
-	echo '<div class="post-sharing clearfix">';
+	if (is_single()) {
+		echo '<div class="post-sharing remove-social clearfix">';
+	} else {
+		echo '<div class="post-sharing clearfix">';
+	}
 		one_sharing('facebook', 'facebook');
 		one_sharing('twitter', 'twitter');
 		one_sharing('linkedin', 'linkedin');
 		one_sharing('google-plus', 'google-plus');
 		one_sharing('email', 'envelope-o');
 		one_sharing('print', 'print');
+		if (!has_post_format()) {
+			echo '<a href="#" class="back-to-top">Top Up</a>';
+		}
 	echo '</div>';
 }
 
@@ -382,18 +430,70 @@ function show_categories($excl=''){
 	foreach ($categories as $cat) {
 		echo '.category-list .category-list-top .cat-item-'.$cat->cat_ID.' a:hover {box-shadow: 0 -3px 0px '. get_field('one_category_color', $cat) . ' inset;}';
 	}
+
+	foreach ($categories as $cat) {
+		echo '.category-list .category-list-top .current-cat.cat-item-'.$cat->cat_ID.' a {box-shadow: 0 -3px 0px '. get_field('one_category_color', $cat) . ' inset;}';
+	}
 	echo '</style>';
 }
 add_action('wp_head', 'show_categories');
 
 // Fixed Widgets Option
-add_filter( 'body_class', 'one_fixed_class' );
-function one_fixed_class( $classes ) {
-	if (get_theme_mod('one_site_design_sticky_widget') && is_home()) {
-		$classes[] = 'fixed-widget';
+function one_fixed_mid() {
+	if (get_theme_mod('one_site_design_sticky_widget_mid')) {
+		echo "
+			stickyMidbarID = jQuery('.sidebar-mid aside:last-child').attr('ID');
+  			jQuery('#'+stickyMidbarID).sticky({topSpacing:20, bottomSpacing:200});
+		";
 	}
-	return $classes;
 }
+
+function one_fixed_right() {
+	if (get_theme_mod('one_site_design_sticky_widget_right')) {
+		echo "
+			stickySidebarID = jQuery('.sidebar-right aside:last-child').attr('ID');
+  			jQuery('#'+stickySidebarID).sticky({topSpacing:20, bottomSpacing:200});
+		";
+	}
+}
+
+function one_fixed_toggle() {
+	echo '<script type="text/javascript">';
+		one_fixed_right();
+		one_fixed_mid();
+	echo '</script>';
+}
+add_action( 'wp_footer', 'one_fixed_toggle' );
+
+function one_scroll_away() {
+	if (is_single()) {
+		echo '<script type="text/javascript">';
+		echo "
+			jQuery(function($){
+		      var _top = $(window).scrollTop();
+		      var _direction;
+		      $(window).scroll(function(){
+		          var _cur_top = $(window).scrollTop();
+		          if((_top < _cur_top) && ($(window).scrollTop() > 24))
+		          {
+		              jQuery('.global-header').addClass('hide-away');
+		              jQuery('.post-sharing').removeClass('remove-social');
+		          }
+		          else
+		          {
+		              jQuery('.global-header').removeClass('hide-away');
+		              jQuery('.post-sharing').addClass('remove-social');
+		          }
+		          _top = _cur_top;
+		      });
+		  });
+		";
+		echo '</script>';
+	}
+}
+add_action( 'wp_footer', 'one_scroll_away' );
+
+
 
 // Change Search Results Count
 function change_wp_search_size($query) {
@@ -412,6 +512,10 @@ function yourprefix_filter_gettext( $translation, $text, $domain ) {
     return $translation;
 }
 add_filter( 'gettext', 'yourprefix_filter_gettext', 10, 3 );  
+
+// Gravity forms return on confirm
+add_filter( 'gform_confirmation_anchor', '__return_true' );
+add_filter( 'gform_tabindex', '__return_false' );
 
 
 

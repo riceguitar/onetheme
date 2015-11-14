@@ -35,13 +35,15 @@
 	<?php if (has_post_thumbnail()) { ?>
 	<div class="post-image">
 		<?php the_post_thumbnail('large'); ?> 
-		<span class="post-image-caption"><?php echo get_post(get_post_thumbnail_id())->post_excerpt; ?> &nbsp;</span>
+		<?php if (get_post(get_post_thumbnail_id())->post_excerpt) { ?>
+			<span class="post-image-caption"><?php echo get_post(get_post_thumbnail_id())->post_excerpt; ?> &nbsp;</span>
+		<?php } ?>
 	</div>
 	<?php } ?>
 	<div class="row">
-		<div class="col-md-2">
+		<div class="col-md-2 mobile-height">
 		<?php 
-			echo '<div class="post-sharing clearfix">';
+			echo '<div class="post-sharing remove-social clearfix" id="social-block">';
 				one_sharing('facebook', 'facebook');
 				one_sharing('twitter', 'twitter');
 				one_sharing('linkedin', 'linkedin');

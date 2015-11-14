@@ -1,4 +1,4 @@
-<div class="post-meta article-margin article-top">
+<div class="post-meta <?php if (!is_single() || has_post_format('quote')) { ?>article-margin article-top<?php } ?>">
 	<div class="post-meta-item post-meta-cats"><?php one_category_colors(); //echo get_the_category_list( __( ', ', 'one_theme' ) ); ?></div>
 	<div class="post-meta-item"><time><?php echo get_the_date('l, F j, Y', get_the_ID()); ?></time></div>
 	<?php if (function_exists('wpp_get_views')) { ?>

@@ -7,7 +7,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-7">
+		<div class="col-md-7 results-col">
 
 
 			<?php if (get_search_query() !== '') { ?>
@@ -39,12 +39,12 @@
 			
 		</div>
 
-		<div class="col-md-5">
+		<div class="col-md-5 hidden-sm hidden-xs">
+			<?php if (is_active_sidebar('one-search-results')) { ?>
 			<div class="search-widgets">
-				<?php if (is_active_sidebar('one-search-results')) { ?>
-						<?php dynamic_sidebar( 'one-search-results' ); ?>
-				<?php } ?>
+				<?php dynamic_sidebar( 'one-search-results' ); ?>
 			</div>
+			<?php } ?>
 		</div>
 
 	</div>

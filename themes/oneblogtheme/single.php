@@ -4,7 +4,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="<?php one_col_width('content'); ?>">
+		<div class="col-md-8 col-lg-9">
 			<?php 
 			if (have_posts()) {
 				while (have_posts()) {

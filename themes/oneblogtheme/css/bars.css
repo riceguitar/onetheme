@@ -1,0 +1,52 @@
+#bars {
+    height: 300px;
+    left: .5%;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    opacity: .35;
+    z-index: 0;
+}
+
+.bar {
+   background: #666;
+    bottom: 1px;
+    height: 3px;
+    position: absolute;
+    width: 4.5%;      
+}
+.bar.on {
+    animation: sound 0ms -800ms linear infinite alternate;
+}
+
+@keyframes sound {
+    0% {
+       opacity: .35;
+        height: 3px; 
+    }
+    100% {
+        opacity: 1;       
+        height: 300px;        
+    }
+}
+
+.bar:nth-child(1)  { left: 0%; animation-duration: 474ms; height: 200px;}
+.bar:nth-child(2)  { left: 5%; animation-duration: 433ms; height: 290px; opacity: .7;}
+.bar:nth-child(3)  { left: 10%; animation-duration: 407ms; height: 130px;}
+.bar:nth-child(4)  { left: 15%; animation-duration: 458ms; height: 180px; opacity: .3;}
+.bar:nth-child(5)  { left: 20%; animation-duration: 400ms; height: 220px; opacity: .15;}
+.bar:nth-child(6)  { left: 25%; animation-duration: 427ms; height: 100px; opacity: .5;}
+.bar:nth-child(7)  { left: 30%; animation-duration: 441ms; height: 145px; opacity: .7;}
+.bar:nth-child(8)  { left: 35%; animation-duration: 419ms; height: 200px; opacity: .3;}
+.bar:nth-child(9)  { left: 40%; animation-duration: 487ms; height: 120px; opacity: .7;}
+.bar:nth-child(10) { left: 45%; animation-duration: 442ms; height: 298px; opacity: .22;}
+.bar:nth-child(11)  { left: 50%; animation-duration: 427ms; height: 280px; opacity: .41;}
+.bar:nth-child(12)  { left: 55%; animation-duration: 441ms; height: 200px; opacity: .2;}
+.bar:nth-child(13)  { left: 60%; animation-duration: 419ms; height: 150px; opacity: .4;} 
+.bar:nth-child(14)  { left: 70%; animation-duration: 487ms; height: 90px; }
+.bar:nth-child(15) { left: 75%; animation-duration: 360ms; height: 298px; opacity: .22;}
+.bar:nth-child(16)  { left: 80%; animation-duration: 320ms; height: 280px; opacity: .41;}
+.bar:nth-child(17)  { left: 85%; animation-duration: 400ms; height: 200px; opacity: .2;}
+.bar:nth-child(18)  { left: 90%; animation-duration: 420ms; height: 150px; opacity: .4;} 
+.bar:nth-child(19)  { left: 95%; animation-duration: 350ms; height: 90px; }

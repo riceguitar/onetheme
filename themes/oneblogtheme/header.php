@@ -11,6 +11,9 @@
 </head>
 
 <body <?php body_class(); ?>>
+<div id="one-wrapper">
+
+<div id="primary">
 
 <?php if (!is_search()) : ?>
 <?php get_template_part( 'partials/search', 'over' ); ?>
@@ -50,7 +53,7 @@
 		</nav>
 
 		<div id="global-social" class="global-social pull-right hidden-xs">
-			<a href="" id="search-trigger"><i class="fa fa-search"></i></a>
+			<a href="" id="search-trigger" class="search-trigger"><i class="fa fa-search"></i></a>
 			<?php if (get_theme_mod('one_site_social_fb')) { echo '<a href="'.get_theme_mod('one_site_social_fb').'" class="global-social-fb"><i class="fa fa-facebook"></i></a>'; } ?>
 			<?php if (get_theme_mod('one_site_social_twitter')) { echo '<a href="'.get_theme_mod('one_site_social_twitter').'" class="global-social-twitter"><i class="fa fa-twitter"></i></a>'; } ?>
 			<?php if (get_theme_mod('one_site_social_gplus')) { echo '<a href="'.get_theme_mod('one_site_social_gplus').'" class="global-social-gplus"><i class="fa fa-google-plus"></i></a>'; } ?>
@@ -59,10 +62,10 @@
 
 		<div id="global-nav-mobile" class="global-nav-mobile pull-right hidden-sm hidden-md hidden-lg">
 			<?php if (is_active_sidebar('one-mobile-player')) { ?>
-				<a href="" id="podcast-trigger"><img src="<?php echo get_template_directory_uri(); ?>/images/mobile-podcast.png" /></a>
+				<a href="" id="podcast-trigger"></a>
 			<?php } ?>
-			<a href="" id="search-trigger-mobile"><img src="<?php echo get_template_directory_uri(); ?>/images/mobile-search.png" /></a>
-			<a href="" id="menu-trigger-mobile"><img src="<?php echo get_template_directory_uri(); ?>/images/mobile-hamburger.png" /></a>
+			<a href="" id="search-trigger-mobile" class="search-trigger"></a>
+			<a href="" id="menu-trigger-mobile"></a>
 		</div>
 
 	</div><!-- //container -->
@@ -77,6 +80,11 @@
 		'menu_id' => 'mobile-nav'
 	));
 	?>
+	<?php if (get_theme_mod('one_site_mobile_message')) { ?>
+		<div class="global-mobile-message">
+			<?php echo get_theme_mod('one_site_mobile_message'); ?>
+		</div>
+	<?php } ?>
 </div>
 <!-- // Mobile Navigation -->
 
@@ -84,6 +92,27 @@
 	<!-- Mobile Podcast Player -->
 	<div id="mobile-podcast-player" class="mobile-podcast-player hidden-sm hidden-md hidden-lg">
 			<?php dynamic_sidebar( 'one-mobile-player' ); ?>
+			<div id="bars">
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+			</div>
 	</div>
 	<!-- // Mobile Podcast Player -->
 <?php } ?>
